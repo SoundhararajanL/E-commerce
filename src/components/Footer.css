@@ -1,0 +1,24 @@
+
+   
+
+.view-product-btn {
+    margin-left: 50%;
+    transform: translateX(-50%); /* Center the button horizontally */
+}
+
+.icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between icons */
+    margin-top: 20px; /* Add space above the icons */
+}
+
+.social-icon {
+    width: 30px; /* Set the width of the icons */
+    height: 30px; /* Set the height of the icons */
+}
+
+.social-icon:hover{
+    transform: translateY(-5px); /* Optional: Add a slight hover effect */
+    transition: transform 0.3s ease; /* Optional: Add a smooth hover effect */
+}

@@ -1,0 +1,53 @@
+.modal-body-scrollable {
+    max-height: 300px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
+.modal-content-flex {
+    display: flex;
+    gap: 20px;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 40px;
+    width: -webkit-fill-available;
+  
+}
+
+.modal-img {
+    width: 200px; /* Adjust as needed */
+    height: auto;
+}
+
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 100px;
+}
+
+.modal-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment-options img {
+    width: 50px; /* Adjust as needed */
+    height: auto;
+}

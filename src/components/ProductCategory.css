@@ -1,0 +1,32 @@
+.card {
+   
+  
+    flex-direction: column;
+    justify-content: space-between; /* Ensure space between image and title */
+   
+    transition: transform 0.3s ease; /* Optional: Add a smooth hover effect */
+    
+}
+
+.card img {
+    height: 60%; /* Adjust image height */
+    width: 100%; /* Ensure image width spans the card */
+   
+    
+   
+}
+
+
+
+.card-title {
+    margin: 0;
+    font-size: 0.7rem; /* Adjust title font size */
+    
+   
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Optional: Add a slight hover effect */
+}
+
+
