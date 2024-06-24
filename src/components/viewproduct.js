@@ -32,7 +32,7 @@ const Products = () => {
     const handleModal = (product) => {
 
         setModalVisible(true);
-        dispatch(setSelectedProducts(product))
+        dispatch(setSelectedProducts(product)) 
     }
 
 

@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faBolt } from '@fortawesome/free-solid-svg-icons';
 import './ProductModal.css';
 import paypal from "../images/paypal.png";
 import gpay from "../images/gpay.webp";
 import visa from "../images/visa.png";
+import { addBuyToList } from '../slices/productSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductModal = (props) => {
-    const [img, SetImg] = useState("");
+    const [img, setImg] = useState("");
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [brand, setBrand] = useState('');
     const [spec, setSpec] = useState('');
+    const [orderName, setOrderName] = useState('');
+    const [orderNumber, setOrderNumber] = useState('');
+    const [orderAddress, setOrderAddress] = useState('');
 
     const [showPayments, setShowPayments] = useState(false);
 
     const { selectedProducts } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         if (Object.keys(selectedProducts).length !== 0) {
-            SetImg(selectedProducts.img);
+            setImg(selectedProducts.img);
             setName(selectedProducts.name);
             setPrice(selectedProducts.price);
             setBrand(selectedProducts.brand);
@@ -31,10 +39,26 @@ const ProductModal = (props) => {
 
     const payments = [
         { url: paypal }, { url: gpay }, { url: visa }
-    ]
+    ];
+
     const handleShowPayments = () => {
-        setShowPayments(!showPayments)
-    }
+        setShowPayments(!showPayments);
+    };
+
+    const handleToBuy = () => {
+        if (orderName && orderNumber && orderAddress) {
+            dispatch(addBuyToList({ orderName, orderNumber, orderAddress }));
+            setOrderName('');
+            setOrderNumber('');
+            setOrderAddress('');
+            props.onHide();
+
+            toast.success("Successfully placed order!");
+        } else {
+            toast.error("Please fill in all fields.");
+        }
+    };
+
     return (
         <Modal
             {...props}
@@ -52,9 +76,9 @@ const ProductModal = (props) => {
                     <div className="left-section">
                         <img src={img} className="modal-img" alt={name} />
                         <div className="input-fields">
-                            <input className="form-control" type='text' placeholder='Enter your name' />
-                            <input className="form-control" type='text' placeholder='Enter Email/Mobile Number' />
-                            <input className="form-control" type='text' placeholder='Enter Delivery Address' />
+                            <input className="form-control" type='text' placeholder='Enter your name' value={orderName} onChange={(e) => setOrderName(e.target.value)} />
+                            <input className="form-control" type='text' placeholder='Enter Email/Mobile Number' value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} />
+                            <input className="form-control" type='text' placeholder='Enter Delivery Address' value={orderAddress} onChange={(e) => setOrderAddress(e.target.value)} />
                         </div>
                     </div>
                     <div className="right-section">
@@ -84,12 +108,13 @@ const ProductModal = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <div className='text-end'>
-                    <button type="submit" style={{ backgroundColor: "#ffc107" }} className="btn text-light fw-bold"><FontAwesomeIcon icon={faBolt} /> ADD TO CART</button>
+                    <button type="button" style={{ backgroundColor: "#ffc107" }} className="btn text-light fw-bold"><FontAwesomeIcon icon={faBolt} /> ADD TO CART</button>
                 </div>
                 <div className='text-end'>
-                    <button type="submit" style={{ backgroundColor: "#fd7e14" }} className="btn text-light fw-bold"><FontAwesomeIcon icon={faCartShopping} /> BUY NOW</button>
+                    <button type="button" onClick={handleToBuy} style={{ backgroundColor: "#fd7e14" }} className="btn text-light fw-bold"><FontAwesomeIcon icon={faCartShopping} /> BUY NOW</button>
                 </div>
             </Modal.Footer>
+            <ToastContainer /> 
         </Modal>
     );
 }
